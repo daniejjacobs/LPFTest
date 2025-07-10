@@ -1,0 +1,1389 @@
+<!-- ===============================
+GENERAL NOTES
+1. this is a proof of concept test site
+2. Company Name.: LPS Global
+3. the website double as a normal website for the company and sister-companies as </br>
+	as well as a student management system, used to manage educators and students
+	
+	
+WEBSITE MAIN COLORS TO USE
+** Main color - RED**
+		Primary - #E83F25
+		Substitute - #FE0000
+** Second color - DARK GREY**
+		Primary - #7D7463
+		Substitute - #5E616A
+** Third color - LIGHT GREY**
+		Primary - #A8A196
+** Fourth color - LIGHT-LIGHT GREY**
+		Primary - #AAAAAA
+============================= -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LPS Global | Education, Consulting & Community</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Main color scheme based on your specifications */
+        .bg-primary-red {
+            background-color: #E83F25;
+        }
+        .text-primary-red {
+            color: #E83F25;
+        }
+        .bg-dark-grey {
+            background-color: #7D7463;
+        }
+        .text-dark-grey {
+            color: #7D7463;
+        }
+        .bg-light-grey {
+            background-color: #A8A196;
+        }
+        .text-light-grey {
+            color: #A8A196;
+        }
+        .bg-light-light-grey {
+            background-color: #AAAAAA;
+        }
+        .text-light-light-grey {
+            color: #AAAAAA;
+        }
+
+        /* Additional styles */
+        .hero-gradient {
+            background: linear-gradient(135deg, #E83F25 0%, #7D7463 100%);
+        }
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .testimonial-card {
+            transition: all 0.3s ease;
+        }
+        .testimonial-card:hover {
+            transform: scale(1.03);
+        }
+        .nav-link {
+            position: relative;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: #E83F25;
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        .portal-card {
+            transition: all 0.3s ease;
+            border-left: 4px solid transparent;
+        }
+        .portal-card:hover {
+            transform: translateY(-3px);
+            border-left-color: #E83F25;
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .tab-button {
+            transition: all 0.3s ease;
+        }
+        .tab-button.active {
+            background-color: #E83F25;
+            color: white;
+        }
+        .login-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        .login-modal.active {
+            display: flex;
+        }
+        .user-type-indicator {
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            z-index: 100;
+            background: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            display: none;
+        }
+    </style>
+</head>
+<body class="font-sans antialiased text-gray-800">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center">
+                        <i class="fas fa-graduation-cap text-primary-red text-3xl mr-2"></i>
+                        <span class="text-xl font-bold text-primary-red">LPS Global</span>
+                    </div>
+                </div>
+                <div class="hidden md:ml-6 md:flex md:items-center md:space-x-8">
+                    <a href="#home" class="nav-link text-gray-900 hover:text-primary-red px-3 py-2 text-sm font-medium">Home</a>
+                    <a href="#college" class="nav-link text-gray-900 hover:text-primary-red px-3 py-2 text-sm font-medium">College</a>
+                    <a href="#consultancy" class="nav-link text-gray-900 hover:text-primary-red px-3 py-2 text-sm font-medium">Consultancy</a>
+                    <a href="#community" class="nav-link text-gray-900 hover:text-primary-red px-3 py-2 text-sm font-medium">Community</a>
+                    <a href="#contact" class="nav-link text-gray-900 hover:text-primary-red px-3 py-2 text-sm font-medium">Contact Us</a>
+					<!-- THIS SHOULD ONLY BE A BUTTON, TO SHOW THE MEMBERS LOGIN SCREEN, AND ALLOW ACCESS TO THE MEMBERS SECTIONS 
+						 THIS SHOULD NOT BE A DROP-DOWN COMBO-BOX
+						 MAKE THE 'MEMBERS PORTAL' THE LOGIN BUTTON AS INDICATED AT "login-btn"-->
+                    <button id="portal-btn" class="nav-link text-gray-900 hover:text-primary-red px-3 py-2 text-sm font-medium">Members Portal</button>
+                    <button id="login-btn" class="bg-primary-red text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-red-700 transition duration-300">Login</button>
+                </div>
+                <div class="-mr-2 flex items-center md:hidden">
+                    <button type="button" id="mobile-menu-button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary-red">
+                        <span class="sr-only">Open main menu</span>
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile menu -->
+        <div id="mobile-menu" class="hidden md:hidden">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#home" class="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:text-primary-red hover:bg-gray-50">Home</a>
+                <a href="#college" class="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:text-primary-red hover:bg-gray-50">College</a>
+                <a href="#consultancy" class="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:text-primary-red hover:bg-gray-50">Consultancy</a>
+                <a href="#community" class="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:text-primary-red hover:bg-gray-50">Community</a>
+                <a href="#contact" class="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:text-primary-red hover:bg-gray-50">Contact Us</a>
+                <button id="mobile-portal-btn" class="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:text-primary-red hover:bg-gray-50">Members Portal</button>
+                <button id="mobile-login-btn" class="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-white bg-primary-red hover:bg-red-700">Login</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Public - Landing page & Home -->
+    <section id="home" class="hero-gradient text-white py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="md:flex md:items-center md:justify-between">
+                <div class="md:w-1/2 mb-10 md:mb-0">
+                    <h1 class="text-4xl md:text-5xl font-bold mb-6">Empowering Futures Through Education</h1>
+                    <p class="text-xl mb-8">LPS Global provides innovative educational solutions, consultancy services, and a vibrant learning community to help individuals and organizations thrive.</p>
+                    <div class="flex flex-wrap gap-4">
+                        <a href="#college" class="bg-white text-primary-red px-6 py-3 rounded-md font-medium hover:bg-gray-100 transition duration-300">Explore Our College</a>
+                        <a href="#contact" class="border-2 border-white text-white px-6 py-3 rounded-md font-medium hover:bg-white hover:text-primary-red transition duration-300">Contact Us</a>
+                    </div>
+                </div>
+                <div class="md:w-1/2 flex justify-center">
+                    <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" 
+                         alt="Students learning together" 
+                         class="rounded-lg shadow-2xl max-w-full h-auto">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Key Features Section -->
+    <section class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-dark-grey mb-4">Our Core Offerings</h2>
+                <p class="text-light-grey max-w-3xl mx-auto">LPS Global delivers comprehensive solutions across education, professional development, and community building.</p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Feature 1 -->
+                <div class="bg-gray-50 p-8 rounded-lg service-card transition duration-300">
+                    <div class="text-primary-red text-4xl mb-4">
+                        <i class="fas fa-university"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-dark-grey mb-3">College Programs</h3>
+                    <p class="text-light-grey">Industry-relevant degree and certificate programs designed to prepare students for successful careers.</p>
+                </div>
+                
+                <!-- Feature 2 -->
+                <div class="bg-gray-50 p-8 rounded-lg service-card transition duration-300">
+                    <div class="text-primary-red text-4xl mb-4">
+                        <i class="fas fa-briefcase"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-dark-grey mb-3">Consultancy Services</h3>
+                    <p class="text-light-grey">Expert guidance for organizations seeking to enhance their workforce development and training programs.</p>
+                </div>
+                
+                <!-- Feature 3 -->
+                <div class="bg-gray-50 p-8 rounded-lg service-card transition duration-300">
+                    <div class="text-primary-red text-4xl mb-4">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-dark-grey mb-3">Learning Community</h3>
+                    <p class="text-light-grey">A vibrant network of students, alumni, and professionals fostering collaboration and growth.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Public - College Page -->
+    <section id="college" class="py-16 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-dark-grey mb-4">LPS Global College</h2>
+                <p class="text-light-grey max-w-3xl mx-auto">Transformative education designed for the modern workforce.</p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-8 mb-12">
+                <div>
+                    <h3 class="text-2xl font-bold text-dark-grey mb-4">Our Academic Programs</h3>
+                    <p class="text-light-grey mb-6">LPS Global College offers a range of programs that combine academic rigor with practical, real-world applications. Our curriculum is continuously updated to reflect industry trends and employer needs.</p>
+                    
+                    <div class="space-y-4">
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 text-primary-red mt-1">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <p class="ml-3 text-dark-grey">Bachelor's and Master's degree programs in high-demand fields</p>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 text-primary-red mt-1">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <p class="ml-3 text-dark-grey">Professional certificates for career advancement</p>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 text-primary-red mt-1">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <p class="ml-3 text-dark-grey">Flexible learning options including online and hybrid formats</p>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 text-primary-red mt-1">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <p class="ml-3 text-dark-grey">Industry partnerships for internships and job placements</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="text-xl font-bold text-dark-grey mb-4">Program Areas</h3>
+                    <div class="space-y-3">
+                        <div class="flex items-center p-3 bg-gray-50 rounded-md">
+                            <div class="bg-primary-red text-white p-2 rounded-full mr-4">
+                                <i class="fas fa-laptop-code"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-medium text-dark-grey">Computer Science & IT</h4>
+                                <p class="text-sm text-light-grey">Software Development, Cybersecurity, Data Science</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center p-3 bg-gray-50 rounded-md">
+                            <div class="bg-primary-red text-white p-2 rounded-full mr-4">
+                                <i class="fas fa chart-line"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-medium text-dark-grey">Business & Management</h4>
+                                <p class="text-sm text-light-grey">MBA, Entrepreneurship, Project Management</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center p-3 bg-gray-50 rounded-md">
+                            <div class="bg-primary-red text-white p-2 rounded-full mr-4">
+                                <i class="fas fa-heartbeat"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-medium text-dark-grey">Health Sciences</h4>
+                                <p class="text-sm text-light-grey">Nursing, Public Health, Healthcare Admin</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center p-3 bg-gray-50 rounded-md">
+                            <div class="bg-primary-red text-white p-2 rounded-full mr-4">
+                                <i class="fas fa-cogs"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-medium text-dark-grey">Engineering</h4>
+                                <p class="text-sm text-light-grey">Mechanical, Electrical, Civil Engineering</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center">
+                <a href="#contact" class="inline-block bg-primary-red text-white px-6 py-3 rounded-md font-medium hover:bg-red-700 transition duration-300">Request Program Information</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Public - Consultancy Page -->
+    <section id="consultancy" class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-dark-grey mb-4">Professional Consultancy Services</h2>
+                <p class="text-light-grey max-w-3xl mx-auto">Expert solutions to help organizations develop their workforce and optimize performance.</p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-8 mb-12">
+                <div class="bg-gray-50 p-8 rounded-lg">
+                    <h3 class="text-2xl font-bold text-dark-grey mb-4">Our Consultancy Approach</h3>
+                    <p class="text-light-grey mb-6">LPS Global Consultancy combines academic expertise with practical industry knowledge to deliver customized solutions for businesses, government agencies, and educational institutions.</p>
+                    
+                    <div class="space-y-4">
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 text-primary-red mt-1">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <p class="ml-3 text-dark-grey">Needs assessment and strategic planning</p>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 text-primary-red mt-1">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <p class="ml-3 text-dark-grey">Customized training program development</p>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 text-primary-red mt-1">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <p class="ml-3 text-dark-grey">Leadership and professional development</p>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 text-primary-red mt-1">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <p class="ml-3 text-dark-grey">Organizational effectiveness and change management</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div>
+                    <div class="mb-8">
+                        <h4 class="text-xl font-bold text-dark-grey mb-3">Success Stories</h4>
+                        <div class="bg-white border border-gray-200 rounded-lg p-6 shadow-sm testimonial-card">
+                            <div class="flex items-center mb-4">
+                                <img class="h-12 w-12 rounded-full object-cover" src="https://randomuser.me/api/portraits/women/44.jpg" alt="Client testimonial">
+                                <div class="ml-4">
+                                    <h5 class="font-bold text-dark-grey">Sarah Johnson</h5>
+                                    <p class="text-sm text-light-grey">HR Director, TechSolutions Inc.</p>
+                                </div>
+                            </div>
+                            <p class="text-light-grey italic">"LPS Global transformed our onboarding process with their customized training program. Our new hires are now productive 30% faster than before."</p>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h4 class="text-xl font-bold text-dark-grey mb-3">Our Clients</h4>
+                        <div class="grid grid-cols-3 gap-4">
+                            <div class="bg-white p-4 flex items-center justify-center border border-gray-200 rounded-md">
+                                <span class="text-lg font-bold text-dark-grey">TechCorp</span>
+                            </div>
+                            <div class="bg-white p-4 flex items-center justify-center border border-gray-200 rounded-md">
+                                <span class="text-lg font-bold text-dark-grey">HealthPlus</span>
+                            </div>
+                            <div class="bg-white p-4 flex items-center justify-center border border-gray-200 rounded-md">
+                                <span class="text-lg font-bold text-dark-grey">EduNation</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center">
+                <a href="#contact" class="inline-block bg-primary-red text-white px-6 py-3 rounded-md font-medium hover:bg-red-700 transition duration-300">Schedule a Consultation</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Public - Community Page -->
+    <section id="community" class="py-16 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-dark-grey mb-4">LPS Global Community</h2>
+                <p class="text-light-grey max-w-3xl mx-auto">Connecting learners, educators, and professionals in a dynamic network of growth and opportunity.</p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8 mb-12">
+                <!-- Community Feature 1 -->
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <div class="text-primary-red text-3xl mb-4">
+                        <i class="fas fa-calendar-alt"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-dark-grey mb-3">Events & Workshops</h3>
+                    <p class="text-light-grey mb-4">Regular professional development events, networking opportunities, and skill-building workshops.</p>
+                    <a href="#" class="text-primary-red font-medium hover:underline">View upcoming events →</a>
+                </div>
+                
+                <!-- Community Feature 2 -->
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <div class="text-primary-red text-3xl mb-4">
+                        <i class="fas fa-hands-helping"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-dark-grey mb-3">Mentorship Program</h3>
+                    <p class="text-light-grey mb-4">Connect with experienced professionals or guide the next generation through our structured mentorship initiative.</p>
+                    <a href="#" class="text-primary-red font-medium hover:underline">Learn about mentorship →</a>
+                </div>
+                
+                <!-- Community Feature 3 -->
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <div class="text-primary-red text-3xl mb-4">
+                        <i class="fas fa-bullhorn"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-dark-grey mb-3">Alumni Network</h3>
+                    <p class="text-light-grey mb-4">Join our growing alumni community for career support, job opportunities, and lifelong connections.</p>
+                    <a href="#" class="text-primary-red font-medium hover:underline">Connect with alumni →</a>
+                </div>
+            </div>
+            
+            <div class="bg-white p-8 rounded-lg shadow-md">
+                <div class="md:flex items-center">
+                    <div class="md:w-1/2 mb-6 md:mb-0">
+                        <h3 class="text-2xl font-bold text-dark-grey mb-3">Join Our Community</h3>
+                        <p class="text-light-grey">Whether you're a current student, alumni, or professional interested in our work, there's a place for you in the LPS Global community.</p>
+                    </div>
+                    <div class="md:w-1/2 md:pl-8">
+                        <div class="grid grid-cols-2 gap-4">
+                            <a href="#" class="bg-primary-red text-white text-center py-3 px-4 rounded-md font-medium hover:bg-red-700 transition duration-300">Sign Up</a>
+                            <a href="#contact" class="border border-primary-red text-primary-red text-center py-3 px-4 rounded-md font-medium hover:bg-gray-50 transition duration-300">Contact Us</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Public - ContactUs Page -->
+    <section id="contact" class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-dark-grey mb-4">Contact LPS Global</h2>
+                <p class="text-light-grey max-w-3xl mx-auto">Have questions or want to learn more? Reach out to our team—we're here to help.</p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-8">
+                <div>
+                    <h3 class="text-2xl font-bold text-dark-grey mb-6">Get In Touch</h3>
+                    
+                    <form class="space-y-6">
+                        <div>
+                            <label for="name" class="block text-sm font-medium text-dark-grey mb-1">Full Name</label>
+                            <input type="text" id="name" name="name" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-red focus:border-transparent">
+                        </div>
+                        
+                        <div>
+                            <label for="email" class="block text-sm font-medium text-dark-grey mb-1">Email Address</label>
+                            <input type="email" id="email" name="email" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-red focus:border-transparent">
+                        </div>
+                        
+                        <div>
+                            <label for="subject" class="block text-sm font-medium text-dark-grey mb-1">Subject</label>
+                            <select id="subject" name="subject" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-red focus:border-transparent">
+                                <option value="">Select a topic</option>
+                                <option value="admissions">Admissions Inquiry</option>
+                                <option value="programs">Program Information</option>
+                                <option value="consultancy">Consultancy Services</option>
+                                <option value="community">Community Engagement</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        
+                        <div>
+                            <label for="message" class="block text-sm font-medium text-dark-grey mb-1">Message</label>
+                            <textarea id="message" name="message" rows="4" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-red focus:border-transparent"></textarea>
+                        </div>
+                        
+                        <div>
+                            <button type="submit" class="w-full bg-primary-red text-white py-3 px-6 rounded-md font-medium hover:bg-red-700 transition duration-300">Send Message</button>
+                        </div>
+                    </form>
+                </div>
+                
+                <div>
+                    <div class="bg-gray-50 p-6 rounded-lg h-full">
+                        <h3 class="text-2xl font-bold text-dark-grey mb-6">Our Offices</h3>
+                        
+                        <div class="space-y-6">
+                            <!-- Location 1 -->
+                            <div class="flex items-start">
+                                <div class="text-primary-red text-xl mt-1 mr-4">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-dark-grey mb-1">Headquarters</h4>
+                                    <p class="text-light-grey">123 Education Avenue<br>Boston, MA 02108</p>
+                                    <p class="text-light-grey mt-2"><i class="fas fa-phone-alt mr-2"></i> (617) 555-0123</p>
+                                </div>
+                            </div>
+                            
+                            <!-- Location 2 -->
+                            <div class="flex items-start">
+                                <div class="text-primary-red text-xl mt-1 mr-4">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-dark-grey mb-1">Regional Office</h4>
+                                    <p class="text-light-grey">456 Learning Street<br>San Francisco, CA 94103</p>
+                                    <p class="text-light-grey mt-2"><i class="fas fa-phone-alt mr-2"></i> (415) 555-0198</p>
+                                </div>
+                            </div>
+                            
+                            <!-- Hours -->
+                            <div class="flex items-start">
+                                <div class="text-primary-red text-xl mt-1 mr-4">
+                                    <i class="fas fa-clock"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-dark-grey mb-1">Office Hours</h4>
+                                    <p class="text-light-grey">Monday - Friday: 8:00 - 17:00<br>Saturday: Closed<br>Sunday: Closed</p>
+                                </div>
+                            </div>
+                            
+                            <!-- Social Media -->
+                            <div class="flex items-start">
+                                <div class="text-primary-red text-xl mt-1 mr-4">
+                                    <i class="fas fa-share-alt"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-dark-grey mb-2">Connect With Us</h4>
+                                    <div class="flex space-x-4">
+                                        <a href="#" class="text-primary-red hover:text-red-700 text-xl"><i class="fab fa-facebook-f"></i></a>
+                                        <a href="#" class="text-primary-red hover:text-red-700 text-xl"><i class="fab fa-twitter"></i></a>
+                                        <a href="#" class="text-primary-red hover:text-red-700 text-xl"><i class="fab fa-linkedin-in"></i></a>
+                                        <a href="#" class="text-primary-red hover:text-red-700 text-xl"><i class="fab fa-instagram"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- User Type Indicator -->
+    <div id="user-type-indicator" class="user-type-indicator">
+        <span id="user-type-text"></span>
+        <button id="logout-btn" class="ml-2 text-primary-red hover:text-red-700">
+            <i class="fas fa-sign-out-alt"></i>
+        </button>
+    </div>
+	
+	<!-- ===============================================================================================================================
+	The members section should only be available for members, of which ever access Type
+	When members (either an educator or a student logs in / Click on button 'Members Portal')
+	Then only a member will gain access to the operating system
+	Two main issues to address:
+		1. Educators
+		Gains access to the educators sub-Section
+		educators can see other educators bio's
+		educators have CRUD operations only for their own Profile on the system.
+		educators have CRUD operations for students, linked to the subjects or classes they present
+		educators must be able to upload class materials for download by students in their classes
+		educators to generate reports of progess, completion and results for students, combined in their respective fields
+
+		2. Students
+		only have CRUD operations for their own profile on system
+		For Security reasons, students MUST NOT HAVE ACCESS TO ANOTHER STUDENTS BIO
+		students can download course material only from the courses or classes they are registered to
+		students can upload assignments to their profile
+	================================================================================================================================= -->
+
+    <!-- Login Modal -->
+    <div id="login-modal" class="login-modal">
+        <div class="bg-white rounded-lg shadow-xl overflow-hidden w-full max-w-md">
+            <div class="p-8">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-2xl font-bold text-gray-900">Member Login</h2>
+                    <button id="close-modal" class="text-gray-400 hover:text-gray-500">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div id="login-error" class="hidden mb-4 p-3 bg-red-100 text-red-700 rounded text-sm"></div>
+                <form id="login-form" class="space-y-6">
+                    <div>
+                        <label for="login-username" class="block text-sm font-medium text-gray-700">Username</label>
+                        <input type="text" id="login-username" name="username" required 
+                               class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-primary-red focus:border-primary-red">
+                    </div>
+                    <div>
+                        <label for="login-password" class="block text-sm font-medium text-gray-700">Password</label>
+                        <input type="password" id="login-password" name="password" required 
+                               class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-primary-red focus:border-primary-red">
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center">
+                            <input id="remember-me" name="remember-me" type="checkbox" 
+                                   class="h-4 w-4 text-primary-red focus:ring-primary-red border-gray-300 rounded">
+                            <label for="remember-me" class="ml-2 block text-sm text-gray-700">Remember me</label>
+                        </div>
+                        <div class="text-sm">
+                            <a href="#" class="font-medium text-primary-red hover:text-red-700">Forgot your password?</a>
+                        </div>
+                    </div>
+                    <div>
+                        <button type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary-red hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-red">
+                            Sign in
+                        </button>
+                    </div>
+                </form>
+                <div class="mt-6">
+                    <div class="relative">
+                        <div class="absolute inset-0 flex items-center">
+                            <div class="w-full border-t border-gray-300"></div>
+                        </div>
+                        <div class="relative flex justify-center text-sm">
+                            <span class="px-2 bg-white text-gray-500">Demo Credentials</span>
+                        </div>
+                    </div>
+                    <div class="mt-4 grid grid-cols-1 gap-3">
+                        <div class="bg-gray-50 p-3 rounded-md">
+                            <p class="text-sm text-gray-600"><span class="font-medium">Educator:</span> eduAdmin / eduAdmin</p>
+                        </div>
+                        <div class="bg-gray-50 p-3 rounded-md">
+                            <p class="text-sm text-gray-600"><span class="font-medium">Student:</span> studentAdmin / studentAdmin</p>
+                        </div>
+                        <div class="bg-gray-50 p-3 rounded-md">
+                            <p class="text-sm text-gray-600"><span class="font-medium">Administrator:</span> Admin1234 / Admin1234</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Members Portal Sections -->
+    <!-- Educator Portal -->
+    <section id="educator-portal" class="py-20 bg-gray-50 hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-extrabold text-gray-900 sm:text-4xl">
+                    <span class="block">Educator Portal</span>
+                </h2>
+                <p class="mt-4 max-w-2xl text-xl text-gray-600 mx-auto">
+                    Manage your courses, students, and teaching materials.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Educator Dashboard -->
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="text-xl font-bold text-dark-grey mb-4">My Dashboard</h3>
+                    <div class="space-y-4">
+                        <div class="flex items-center p-3 bg-gray-50 rounded-md">
+                            <div class="bg-primary-red text-white p-2 rounded-full mr-4">
+                                <i class="fas fa-book"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-medium text-dark-grey">Courses Assigned</h4>
+                                <p class="text-sm text-light-grey">3 active courses this semester</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center p-3 bg-gray-50 rounded-md">
+                            <div class="bg-primary-red text-white p-2 rounded-full mr-4">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-medium text-dark-grey">Students</h4>
+                                <p class="text-sm text-light-grey">87 students across all courses</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center p-3 bg-gray-50 rounded-md">
+                            <div class="bg-primary-red text-white p-2 rounded-full mr-4">
+                                <i class="fas fa-tasks"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-medium text-dark-grey">Assignments</h4>
+                                <p class="text-sm text-light-grey">12 pending for grading</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="text-xl font-bold text-dark-grey mb-4">Quick Actions</h3>
+                    <div class="space-y-3">
+                        <button class="w-full text-left flex items-center p-3 bg-gray-50 rounded-md hover:bg-gray-100">
+                            <div class="bg-primary-red text-white p-2 rounded-full mr-4">
+                                <i class="fas fa-upload"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-medium text-dark-grey">Upload Course Material</h4>
+                            </div>
+                        </button>
+                        <button class="w-full text-left flex items-center p-3 bg-gray-50 rounded-md hover:bg-gray-100">
+                            <div class="bg-primary-red text-white p-2 rounded-full mr-4">
+                                <i class="fas fa-edit"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-medium text-dark-grey">Create Assignment</h4>
+                            </div>
+                        </button>
+                        <button class="w-full text-left flex items-center p-3 bg-gray-50 rounded-md hover:bg-gray-100">
+                            <div class="bg-primary-red text-white p-2 rounded-full mr-4">
+                                <i class="fas fa-chart-bar"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-medium text-dark-grey">Generate Reports</h4>
+                            </div>
+                        </button>
+                        <button class="w-full text-left flex items-center p-3 bg-gray-50 rounded-md hover:bg-gray-100">
+                            <div class="bg-primary-red text-white p-2 rounded-full mr-4">
+                                <i class="fas fa-calendar-plus"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-medium text-dark-grey">Schedule Office Hours</h4>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- My Courses -->
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="text-xl font-bold text-dark-grey mb-4">My Courses</h3>
+                    <div class="space-y-4">
+                        <div class="border-b border-gray-200 pb-4">
+                            <h4 class="font-medium text-dark-grey mb-2">CS 101 - Introduction to Programming</h4>
+                            <div class="flex justify-between text-sm text-light-grey">
+                                <span>Spring 2023</span>
+                                <span>32 students</span>
+                            </div>
+                            <div class="mt-2">
+                                <button class="text-primary-red text-sm font-medium hover:underline">View Course →</button>
+                            </div>
+                        </div>
+                        <div class="border-b border-gray-200 pb-4">
+                            <h4 class="font-medium text-dark-grey mb-2">BUS 210 - Organizational Behavior</h4>
+                            <div class="flex justify-between text-sm text-light-grey">
+                                <span>Spring 2023</span>
+                                <span>28 students</span>
+                            </div>
+                            <div class="mt-2">
+                                <button class="text-primary-red text-sm font-medium hover:underline">View Course →</button>
+                            </div>
+                        </div>
+                        <div class="border-b border-gray-200 pb-4">
+                            <h4 class="font-medium text-dark-grey mb-2">ENG 301 - Advanced Engineering Design</h4>
+                            <div class="flex justify-between text-sm text-light-grey">
+                                <span>Spring 2023</span>
+                                <span>27 students</span>
+                            </div>
+                            <div class="mt-2">
+                                <button class="text-primary-red text-sm font-medium hover:underline">View Course →</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Student Management -->
+            <div class="mt-12 bg-white p-6 rounded-lg shadow-md">
+                <h3 class="text-2xl font-bold text-dark-grey mb-6">Student Management</h3>
+                
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-dark-grey uppercase tracking-wider">Student</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-dark-grey uppercase tracking-wider">Course</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-dark-grey uppercase tracking-wider">Progress</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-dark-grey uppercase tracking-wider">Grade</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-dark-grey uppercase tracking-wider">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200">
+                            <!-- Student 1 -->
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="flex items-center">
+                                        <div class="flex-shrink-0 h-10 w-10">
+                                            <img class="h-10 w-10 rounded-full" src="https://randomuser.me/api/portraits/women/22.jpg" alt="">
+                                        </div>
+                                        <div class="ml-4">
+                                            <div class="text-sm font-medium text-dark-grey">Jessica Lee</div>
+                                            <div class="text-sm text-light-grey">jlee@student.LPS Global.com</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-dark-grey">CS 101</div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                        <div class="bg-primary-red h-2.5 rounded-full" style="width: 75%"></div>
+                                    </div>
+                                    <div class="text-xs text-light-grey mt-1">75% complete</div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                        B+
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-dark-grey">
+                                    <a href="#" class="text-primary-red hover:text-red-700 mr-3">View</a>
+                                    <a href="#" class="text-primary-red hover:text-red-700">Message</a>
+                                </td>
+                            </tr>
+                            
+                            <!-- Student 2 -->
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="flex items-center">
+                                        <div class="flex-shrink-0 h-10 w-10">
+                                            <img class="h-10 w-10 rounded-full" src="https://randomuser.me/api/portraits/men/41.jpg" alt="">
+                                        </div>
+                                        <div class="ml-4">
+                                            <div class="text-sm font-medium text-dark-grey">Daniel Kim</div>
+                                            <div class="text-sm text-light-grey">dkim@student.LPS Global.com</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-dark-grey">BUS 210</div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                        <div class="bg-primary-red h-2.5 rounded-full" style="width: 90%"></div>
+                                    </div>
+                                    <div class="text-xs text-light-grey mt-1">90% complete</div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                        A
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-dark-grey">
+                                    <a href="#" class="text-primary-red hover:text-red-700 mr-3">View</a>
+                                    <a href="#" class="text-primary-red hover:text-red-700">Message</a>
+                                </td>
+                            </tr>
+                            
+                            <!-- Student 3 -->
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="flex items-center">
+                                        <div class="flex-shrink-0 h-10 w-10">
+                                            <img class="h-10 w-10 rounded-full" src="https://randomuser.me/api/portraits/women/35.jpg" alt="">
+                                        </div>
+                                        <div class="ml-4">
+                                            <div class="text-sm font-medium text-dark-grey">Amanda Chen</div>
+                                            <div class="text-sm text-light-grey">achen@student.LPS Global.com</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-dark-grey">ENG 301</div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                        <div class="bg-primary-red h-2.5 rounded-full" style="width: 60%"></div>
+                                    </div>
+                                    <div class="text-xs text-light-grey mt-1">60% complete</div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">
+                                        C+
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-dark-grey">
+                                    <a href="#" class="text-primary-red hover:text-red-700 mr-3">View</a>
+                                    <a href="#" class="text-primary-red hover:text-red-700">Message</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Student Portal -->
+    <section id="student-portal" class="py-20 bg-gray-50 hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-extrabold text-gray-900 sm:text-4xl">
+                    <span class="block">Student Portal</span>
+                </h2>
+                <p class="mt-4 max-w-2xl text-xl text-gray-600 mx-auto">
+                    Access your courses, assignments, and academic resources.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Student Dashboard -->
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="text-xl font-bold text-dark-grey mb-4">My Dashboard</h3>
+                    <div class="space-y-4">
+                        <div class="flex items-center p-3 bg-gray-50 rounded-md">
+                            <div class="bg-primary-red text-white p-2 rounded-full mr-4">
+                                <i class="fas fa-book"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-medium text-dark-grey">Current Courses</h4>
+                                <p class="text-sm text-light-grey">4 courses this semester</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center p-3 bg-gray-50 rounded-md">
+                            <div class="bg-primary-red text-white p-2 rounded-full mr-4">
+                                <i class="fas fa-tasks"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-medium text-dark-grey">Pending Assignments</h4>
+                                <p class="text-sm text-light-grey">3 assignments due soon</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center p-3 bg-gray-50 rounded-md">
+                            <div class="bg-primary-red text-white p-2 rounded-full mr-4">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-medium text-dark-grey">GPA</h4>
+                                <p class="text-sm text-light-grey">3.42 current GPA</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Links -->
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="text-xl font-bold text-dark-grey mb-4">Quick Links</h3>
+                    <div class="space-y-3">
+                        <a href="#" class="block p-3 bg-gray-50 rounded-md hover:bg-gray-100">
+                            <div class="flex items-center">
+                                <div class="bg-primary-red text-white p-2 rounded-full mr-4">
+                                    <i class="fas fa-calendar-alt"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-medium text-dark-grey">Academic Calendar</h4>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="#" class="block p-3 bg-gray-50 rounded-md hover:bg-gray-100">
+                            <div class="flex items-center">
+                                <div class="bg-primary-red text-white p-2 rounded-full mr-4">
+                                    <i class="fas fa-book-open"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-medium text-dark-grey">Course Materials</h4>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="#" class="block p-3 bg-gray-50 rounded-md hover:bg-gray-100">
+                            <div class="flex items-center">
+                                <div class="bg-primary-red text-white p-2 rounded-full mr-4">
+                                    <i class="fas fa-graduation-cap"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-medium text-dark-grey">Graduation Requirements</h4>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="#" class="block p-3 bg-gray-50 rounded-md hover:bg-gray-100">
+                            <div class="flex items-center">
+                                <div class="bg-primary-red text-white p-2 rounded-full mr-4">
+                                    <i class="fas fa-question-circle"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-medium text-dark-grey">Student Support</h4>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- My Courses -->
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="text-xl font-bold text-dark-grey mb-4">My Courses</h3>
+                    <div class="space-y-4">
+                        <div class="border-b border-gray-200 pb-4">
+                            <h4 class="font-medium text-dark-grey mb-2">CS 101 - Introduction to Programming</h4>
+                            <div class="flex justify-between text-sm text-light-grey">
+                                <span>Prof. Sarah Johnson</span>
+                                <span>Spring 2023</span>
+                            </div>
+                            <div class="mt-2">
+                                <a href="#" class="text-primary-red text-sm font-medium hover:underline">View Course →</a>
+                            </div>
+                        </div>
+                        <div class="border-b border-gray-200 pb-4">
+                            <h4 class="font-medium text-dark-grey mb-2">MATH 210 - Calculus II</h4>
+                            <div class="flex justify-between text-sm text-light-grey">
+                                <span>Prof. Robert Smith</span>
+                                <span>Spring 2023</span>
+                            </div>
+                            <div class="mt-2">
+                                <a href="#" class="text-primary-red text-sm font-medium hover:underline">View Course →</a>
+                            </div>
+                        </div>
+                        <div class="border-b border-gray-200 pb-4">
+                            <h4 class="font-medium text-dark-grey mb-2">ENG 150 - Academic Writing</h4>
+                            <div class="flex justify-between text-sm text-light-grey">
+                                <span>Prof. Emily Wilson</span>
+                                <span>Spring 2023</span>
+                            </div>
+                            <div class="mt-2">
+                                <a href="#" class="text-primary-red text-sm font-medium hover:underline">View Course →</a>
+                            </div>
+                        </div>
+                        <div class="pb-4">
+                            <h4 class="font-medium text-dark-grey mb-2">BUS 101 - Introduction to Business</h4>
+                            <div class="flex justify-between text-sm text-light-grey">
+                                <span>Prof. Michael Chen</span>
+                                <span>Spring 2023</span>
+                            </div>
+                            <div class="mt-2">
+                                <a href="#" class="text-primary-red text-sm font-medium hover:underline">View Course →</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Assignments -->
+            <div class="mt-12 bg-white p-6 rounded-lg shadow-md">
+                <h3 class="text-2xl font-bold text-dark-grey mb-6">My Assignments</h3>
+                
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-dark-grey uppercase tracking-wider">Assignment</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-dark-grey uppercase tracking-wider">Course</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-dark-grey uppercase tracking-wider">Due Date</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-dark-grey uppercase tracking-wider">Status</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-dark-grey uppercase tracking-wider">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200">
+                            <!-- Assignment 1 -->
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm font-medium text-dark-grey">Programming Project 1</div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-dark-grey">CS 101</div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-dark-grey">May 15, 2023</div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">
+                                        Pending
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-dark-grey">
+                                    <a href="#" class="text-primary-red hover:text-red-700 mr-3">View</a>
+                                    <a href="#" class="text-primary-red hover:text-red-700">Submit</a>
+                                </td>
+                            </tr>
+                            
+                            <!-- Assignment 2 -->
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm font-medium text-dark-grey">Calculus Problem Set 4</div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-dark-grey">MATH 210</div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-dark-grey">May 18, 2023</div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">
+                                        Pending
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-dark-grey">
+                                    <a href="#" class="text-primary-red hover:text-red-700 mr-3">View</a>
+                                    <a href="#" class="text-primary-red hover:text-red-700">Submit</a>
+                                </td>
+                            </tr>
+                            
+                            <!-- Assignment 3 -->
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm font-medium text-dark-grey">Research Paper Draft</div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-dark-grey">ENG 150</div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-dark-grey">May 10, 2023</div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                        Submitted
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-dark-grey">
+                                    <a href="#" class="text-primary-red hover:text-red-700">View</a>
+                                </td>
+                            </tr>
+                            
+                            <!-- Assignment 4 -->
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm font-medium text-dark-grey">Business Case Study</div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-dark-grey">BUS 101</div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-dark-grey">May 5, 2023</div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">
+                                        Graded (B+)
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-dark-grey">
+                                    <a href="#" class="text-primary-red hover:text-red-700">View Feedback</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark-grey text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold mb-4">LPS Global</h3>
+                    <p class="text-light-light-grey mb-4">Empowering individuals and organizations through innovative education and professional development solutions.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-light-light-grey hover:text-white"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-light-light-grey hover:text-white"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-light-light-grey hover:text-white"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" class="text-light-light-grey hover:text-white"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#home" class="text-light-light-grey hover:text-white">Home</a></li>
+                        <li><a href="#college" class="text-light-light-grey hover:text-white">College</a></li>
+                        <li><a href="#consultancy" class="text-light-light-grey hover:text-white">Consultancy</a></li>
+                        <li><a href="#community" class="text-light-light-grey hover:text-white">Community</a></li>
+                        <li><a href="#contact" class="text-light-light-grey hover:text-white">Contact Us</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Programs</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-light-light-grey hover:text-white">Undergraduate Degrees</a></li>
+                        <li><a href="#" class="text-light-light-grey hover:text-white">Graduate Programs</a></li>
+                        <li><a href="#" class="text-light-light-grey hover:text-white">Professional Certificates</a></li>
+                        <li><a href="#" class="text-light-light-grey hover:text-white">Corporate Training</a></li>
+                        <li><a href="#" class="text-light-light-ggrey hover:text-white">Online Learning</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Contact</h4>
+                    <address class="not-italic text-light-light-grey">
+                        <p class="mb-2">123 Education Avenue</p>
+                        <p class="mb-2">Boston, MA 02108</p>
+                        <p class="mb-2">Phone: (617) 555-0123</p>
+                        <p class="mb-2">Email: info@LPS Global.com</p>
+                    </address>
+                </div>
+            </div>
+            
+            <div class="border-t border-light-grey mt-12 pt-8">
+                <p class="text-light-light-grey text-center">&copy; 2025 LPS Global. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        document.getElementById('mobile-menu-button').addEventListener('click', function() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                    
+                    // Close mobile menu if open
+                    const mobileMenu = document.getElementById('mobile-menu');
+                    if (!mobileMenu.classList.contains('hidden')) {
+                        mobileMenu.classList.add('hidden');
+                    }
+                }
+            });
+        });
+
+        // Login system
+        let currentUser = null;
+
+        // Check if user is logged in
+        function isLoggedIn() {
+            return currentUser !== null;
+        }
+
+        // Show login modal
+        function showLoginModal() {
+            document.getElementById('login-modal').classList.add('active');
+            document.getElementById('login-error').classList.add('hidden');
+        }
+
+        // Hide login modal
+        function hideLoginModal() {
+            document.getElementById('login-modal').classList.remove('active');
+        }
+
+        // Login form submission
+        document.getElementById('login-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('login-username').value;
+            const password = document.getElementById('login-password').value;
+            
+            // Check credentials
+            if (username === 'eduAdmin' && password === 'eduAdmin') {
+                currentUser = { type: 'educator', username: username };
+                handleSuccessfulLogin('Educator');
+            } else if (username === 'studentAdmin' && password === 'studentAdmin') {
+                currentUser = { type: 'student', username: username };
+                handleSuccessfulLogin('Student');
+            } else if (username === 'Admin1234' && password === 'Admin1234') {
+                currentUser = { type: 'admin', username: username };
+                handleSuccessfulLogin('Administrator');
+            } else {
+                // Show error
+                const errorElement = document.getElementById('login-error');
+                errorElement.textContent = 'Invalid username or password';
+                errorElement.classList.remove('hidden');
+            }
+        });
+
+        // Handle successful login
+        function handleSuccessfulLogin(userType) {
+            // Hide login modal and prompt
+            hideLoginModal();
+            
+            // Show user type indicator
+            const indicator = document.getElementById('user-type-indicator');
+            const userTypeText = document.getElementById('user-type-text');
+            userTypeText.textContent = `Logged in as ${userType}`;
+            indicator.style.display = 'flex';
+            
+            // Show appropriate portal based on user type
+            if (userType === 'Educator') {
+                document.getElementById('educator-portal').classList.remove('hidden');
+                document.getElementById('student-portal').classList.add('hidden');
+            } else if (userType === 'Student') {
+                document.getElementById('student-portal').classList.remove('hidden');
+                document.getElementById('educator-portal').classList.add('hidden');
+            } else if (userType === 'Administrator') {
+                // Admin can see both portals
+                document.getElementById('educator-portal').classList.remove('hidden');
+                document.getElementById('student-portal').classList.remove('hidden');
+            }
+            
+            // Scroll to the portal section
+            document.querySelector('#educator-portal, #student-portal').scrollIntoView({
+                behavior: 'smooth'
+            });
+        }
+
+        // Logout functionality
+        document.getElementById('logout-btn').addEventListener('click', function() {
+            currentUser = null;
+            
+            // Hide user type indicator
+            document.getElementById('user-type-indicator').style.display = 'none';
+            
+            // Hide all portal sections
+            document.getElementById('educator-portal').classList.add('hidden');
+            document.getElementById('student-portal').classList.add('hidden');
+            
+            // Scroll back to top
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Event listeners for login buttons
+        document.getElementById('login-btn').addEventListener('click', showLoginModal);
+        document.getElementById('mobile-login-btn').addEventListener('click', showLoginModal);
+        document.getElementById('close-modal').addEventListener('click', hideLoginModal);
+
+        // Members portal button functionality
+        document.getElementById('portal-btn').addEventListener('click', function() {
+            if (!isLoggedIn()) {
+                showLoginModal();
+            } else {
+                // Scroll to the appropriate portal section
+                if (currentUser.type === 'educator' || currentUser.type === 'admin') {
+                    document.getElementById('educator-portal').scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                } else if (currentUser.type === 'student') {
+                    document.getElementById('student-portal').scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            }
+        });
+
+        // Mobile members portal button functionality
+        document.getElementById('mobile-portal-btn').addEventListener('click', function() {
+            if (!isLoggedIn()) {
+                showLoginModal();
+            } else {
+                // Scroll to the appropriate portal section
+                if (currentUser.type === 'educator' || currentUser.type === 'admin') {
+                    document.getElementById('educator-portal').scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                } else if (currentUser.type === 'student') {
+                    document.getElementById('student-portal').scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+                
+                // Close mobile menu
+                document.getElementById('mobile-menu').classList.add('hidden');
+            }
+        });
+    </script>
+</body>
+</html>
